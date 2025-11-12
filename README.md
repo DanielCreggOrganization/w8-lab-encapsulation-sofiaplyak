@@ -8,7 +8,10 @@
 5. [Business Logic Methods](#5-business-logic-methods)
 
 ## Lab Setup
-Create a package called `ie.atu.encapsulation`. Create a `Main` class inside this package. Place all the below classes from the DIY sections into this package. 
+1. Create a package called `ie.atu.encapsulation`
+2. Create a `Main` class inside this package
+3. Create a `main` method inside this Main class
+4. Place all the below classes from the DIY sections into this package. 
 
 ## 1. Basic Data Hiding
 
