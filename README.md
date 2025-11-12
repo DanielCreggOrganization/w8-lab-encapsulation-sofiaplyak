@@ -98,69 +98,52 @@ Create a `Temperature` class that:
 Learn how to validate data in setter methods to maintain data integrity and implement reusable validation using helper methods.
 
 ### Explanation
-Data validation is crucial for maintaining the integrity and reliability of our objects' state. By validating input before allowing changes to our private fields, we can prevent invalid states and ensure our objects behave correctly. Proper validation in setters helps catch errors early and provides clear feedback about what went wrong. To avoid duplicating validation logic between constructors and setters, we can extract common validation rules into private helper methods.
+Data validation is crucial for maintaining the integrity and reliability of our objects' state. By validating input before allowing changes to our private fields, we can prevent invalid states and ensure our objects behave correctly. Proper validation in setters helps catch errors early and provides clear feedback about what went wrong. 
 
 ### Example 1: Basic Validation
 ```java
-public class BankAccount {
-    private double balance;
+public class Student {
+    private int age;
     
-    public double getBalance() {
-        return balance;
+    public void setAge(int age) {
+        // Only set the age if it is valid and print a helpful message when the validation fails
+        if (age < 16 || age > 100) {
+            System.out.println("Invalid age: must be between 16 and 100");
+            return;
+        }
+        this.age = age;
     }
     
-    public void deposit(double amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Deposit amount must be positive");
-        }
-        balance += amount;
-    }
-    
-    public void withdraw(double amount) {
-        if (amount <= 0) {
-            throw new IllegalArgumentException("Withdrawal amount must be positive");
-        }
-        if (amount > balance) {
-            throw new IllegalArgumentException("Insufficient funds");
-        }
-        balance -= amount;
+    public int getAge() {
+        return age;
     }
 }
 ```
 
-### Example 2: Using Validation Helpers
+### Example 2: Using Validation Helpers - To avoid duplicating validation logic between constructors and setters, we can extract common validation rules into private helper methods.
 ```java
 public class Student {
-    private String name;
     private int age;
 
-    // Constructor uses validation helpers
-    public Student(String name, int age) {
-        this.name = validateName(name);
+    // Constructor is a kind of setter too. It initially sets the value of object fields. It too can use the same validation as the setter method  
+    public Student(int age) {
         this.age = validateAge(age);
     }
-
-    // Setters use the same validation helpers
-    public void setName(String name) {
-        this.name = validateName(name);
-    }
-
+    
     public void setAge(int age) {
         this.age = validateAge(age);
     }
 
-    // Private validation helper methods
-    private String validateName(String name) {
-        if (name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException("Name cannot be empty");
-        }
-        return name;
-    }
-
+    // Private internal validation method just usable in this class by the constructor and the setter  
     private int validateAge(int age) {
-        if (age < 0 || age > 150) {
-            throw new IllegalArgumentException("Invalid age");
+        if (age < 16 || age > 100) {
+            System.out.println("Invalid age: must be between 16 and 100");
+            return 0;
         }
+        return age;
+    }
+    
+    public int getAge() {
         return age;
     }
 }
